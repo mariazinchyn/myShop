@@ -5,6 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryRequest {
+
+public class SubcategoryRequest {
     private String name;
+    private Long categoryId;
 }
