@@ -1,15 +1,15 @@
 package com.mariazinchyn.myshop.controller;
 
 import com.mariazinchyn.myshop.dto.request.SubcategoryRequest;
+import com.mariazinchyn.myshop.dto.response.SubcategoryResponse;
 import com.mariazinchyn.myshop.service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("subcategory")
+@RequestMapping("/subcategory")
 
 public class SubcategoryController {
 
@@ -19,5 +19,9 @@ public class SubcategoryController {
     @PostMapping
     public void save(@RequestBody SubcategoryRequest request){
         subcategoryService.save(request);
+    }
+    @GetMapping
+    public List<SubcategoryResponse> findAll(){
+        return subcategoryService.findAll();
     }
 }

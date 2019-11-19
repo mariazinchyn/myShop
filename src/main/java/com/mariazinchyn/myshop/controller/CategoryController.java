@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("/category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
@@ -22,6 +22,7 @@ public class CategoryController {
 
     @GetMapping
     public List<CategoryResponse> findAll(){
-       return categoryService.findAll();
+
+        return categoryService.findAll();
     }
 }
