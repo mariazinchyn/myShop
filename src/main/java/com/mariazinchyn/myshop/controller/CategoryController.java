@@ -20,9 +20,15 @@ public class CategoryController {
 
     }
 
+
     @GetMapping
     public List<CategoryResponse> findAll(){
 
         return categoryService.findAll();
+    }
+
+    @PutMapping
+    public  void update(@RequestBody CategoryRequest request, Long id){
+        categoryService.update(request, id);
     }
 }

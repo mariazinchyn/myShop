@@ -22,6 +22,12 @@ public class CategoryService {
         Category category = new Category();
         category.setName(request.getName());
         categoryRepository.save(category);
+    }
+
+    public void update(CategoryRequest request, Long id){
+        Category category = findOne(id);
+        category.setName(request.getName());
+        categoryRepository.save(category);
 
     }
     public List<CategoryResponse> findAll(){
