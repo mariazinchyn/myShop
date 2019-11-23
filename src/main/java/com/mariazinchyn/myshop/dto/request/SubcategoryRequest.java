@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 
 public class SubcategoryRequest {
+    //private Long id; //21.11
+
     private String name;
     private Long categoryId;
 }

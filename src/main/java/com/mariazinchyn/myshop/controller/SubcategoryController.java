@@ -17,11 +17,7 @@ public class SubcategoryController {
     private SubcategoryService subcategoryService;
 
     @PostMapping
-    public void save(@RequestBody SubcategoryRequest request){
+    public void save(@RequestBody SubcategoryRequest request) {
         subcategoryService.save(request);
-    }
-    @GetMapping
-    public List<SubcategoryResponse> findAll(){
-        return subcategoryService.findAll();
     }
 }

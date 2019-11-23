@@ -31,6 +31,7 @@ public class Product {
     //private String description;
 
    // private Double rating;
+    //private Long subcategoryId;
 
     @ManyToOne
     private Subcategory subcategory;

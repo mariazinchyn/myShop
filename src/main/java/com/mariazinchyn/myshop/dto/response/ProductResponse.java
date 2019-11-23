@@ -13,6 +13,7 @@ public class ProductResponse {
     private String size;
     private Long price;
     private String image;
+    private SubcategoryResponse subcategoryResponse;
 
     public ProductResponse(Product product){
         id = product.getId();
@@ -20,6 +21,7 @@ public class ProductResponse {
         size = product.getSize();
         price = product.getPrice();
         image = product.getImage();
+        subcategoryResponse = new SubcategoryResponse(product.getSubcategory());
 
 
     }
