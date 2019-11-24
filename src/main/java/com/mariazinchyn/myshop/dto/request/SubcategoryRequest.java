@@ -3,12 +3,16 @@ package com.mariazinchyn.myshop.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 
 public class SubcategoryRequest {
-    //private Long id; //21.11
-
+    @NotBlank
     private String name;
+
+    @NotNull
     private Long categoryId;
 }

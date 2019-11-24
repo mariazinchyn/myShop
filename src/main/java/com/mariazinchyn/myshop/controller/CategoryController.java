@@ -6,6 +6,7 @@ import com.mariazinchyn.myshop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public void save(@RequestBody CategoryRequest request){
+    public void save(@Valid @RequestBody CategoryRequest request){
         categoryService.save(request);
 
     }
@@ -26,7 +27,7 @@ public class CategoryController {
     }
 
     @PutMapping
-    public  void update(@RequestBody CategoryRequest request, Long id){
+    public  void update(@Valid @RequestBody CategoryRequest request, Long id){
         categoryService.update(request, id);
     }
 
