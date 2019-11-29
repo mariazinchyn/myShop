@@ -13,6 +13,7 @@ package com.mariazinchyn.myshop.service;
         import org.springframework.data.domain.Sort;
         import org.springframework.stereotype.Service;
 
+        import java.io.IOException;
         import java.util.List;
         import java.util.stream.Collectors;
 
@@ -24,7 +25,13 @@ public class ProductService{
         @Autowired
         private SubcategoryService subcategoryService;
 
-        public void save(ProductRequest request){
+        @Autowired
+        private FileService fileService;
+
+
+
+
+        public void save(ProductRequest request) throws IOException{
                 productRepository.save(productRequestToProduct(null, request));
         }
 
@@ -36,7 +43,7 @@ public class ProductService{
                         collect);
         }
 
-        public void update(ProductRequest request, Long id){
+        public void update(ProductRequest request, Long id) throws IOException{
             productRepository.save(productRequestToProduct(findOne(id), request));
         }
 
@@ -47,13 +54,14 @@ public class ProductService{
 
         }
 
-        private Product productRequestToProduct(Product product,ProductRequest request){
+        private Product productRequestToProduct(Product product,ProductRequest request) throws IOException{
                 if(product == null) {
                         product = new Product();
                 }
                         product.setName(request.getName());
                         product.setSize(request.getSize());
-                        product.setImage(request.getImage());
+                        product.setPhoto(request.getPhoto());
+                        //product.getPhoto(request.getPhoto());
                         product.setSubcategory(subcategoryService.findOne(request.getSubcategoryId()));
                         return product;
                 }

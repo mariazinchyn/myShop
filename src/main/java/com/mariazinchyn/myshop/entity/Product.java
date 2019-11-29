@@ -25,7 +25,7 @@ public class Product {
 
     private String size;
 
-    private String image; // Тут має бути лінк на фото товару
+    private String photo; // Тут має бути лінк на фото товару
     // 31.10.2019
 
     //private String description;
@@ -38,4 +38,6 @@ public class Product {
 
     @ManyToMany(mappedBy = "favoriteProducts")
     private List<User> users = new ArrayList<>();
+
+    //public void getPhoto(String photo) {/ }
 }

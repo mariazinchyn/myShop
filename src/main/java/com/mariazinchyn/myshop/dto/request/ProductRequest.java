@@ -18,7 +18,7 @@ public class ProductRequest {
     @Positive
     @NotNull
     private Long price;
-    private String image;
+    private String photo;
     private String size;
 
     @NotNull

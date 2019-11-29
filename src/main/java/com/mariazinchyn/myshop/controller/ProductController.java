@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 
 @RestController
@@ -21,7 +22,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public void save(@Valid @RequestBody ProductRequest request){
+    public void save(@Valid @RequestBody ProductRequest request)throws IOException {
         productService.save(request);
             }
 
@@ -37,7 +38,7 @@ public class ProductController {
      }
 
       @PutMapping
-     public void update(@Valid @RequestBody ProductRequest request, Long id) {
+     public void update(@Valid @RequestBody ProductRequest request, Long id)throws IOException {
         productService.update(request, id);
            }
 
