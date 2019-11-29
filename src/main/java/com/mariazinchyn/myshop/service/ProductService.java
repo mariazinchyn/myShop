@@ -1,12 +1,16 @@
 package com.mariazinchyn.myshop.service;
 
         import com.mariazinchyn.myshop.dto.request.ProductRequest;
+        import com.mariazinchyn.myshop.dto.response.PageResponse;
         import com.mariazinchyn.myshop.dto.response.ProductResponse;
         import com.mariazinchyn.myshop.entity.Product;
         import com.mariazinchyn.myshop.exception.NoMatchesException;
         import com.mariazinchyn.myshop.repository.ProductRepository;
         import com.mariazinchyn.myshop.repository.SubcategoryRepository;
         import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.data.domain.Page;
+        import org.springframework.data.domain.PageRequest;
+        import org.springframework.data.domain.Sort;
         import org.springframework.stereotype.Service;
 
         import java.util.List;
@@ -24,6 +28,14 @@ public class ProductService{
                 productRepository.save(productRequestToProduct(null, request));
         }
 
+        public PageResponse<ProductResponse> findPage(Integer page, Integer size, String fieldName, Sort.Direction direction) {
+                Page<Product> data = productRepository.findAll(PageRequest.of(page, size, direction, fieldName));
+                List<ProductResponse> collect = data.get().map(ProductResponse::new).collect(Collectors.toList());
+                return new PageResponse<>(data.getTotalElements(),
+                        data.getTotalPages(),
+                        collect);
+        }
+
         public void update(ProductRequest request, Long id){
             productRepository.save(productRequestToProduct(findOne(id), request));
         }
@@ -31,6 +43,7 @@ public class ProductService{
 
            public Product findOne(Long id) {
               return    productRepository.findById(id).orElseThrow(()-> new NoMatchesException("with id " + id + " not exist."));
+
 
         }
 

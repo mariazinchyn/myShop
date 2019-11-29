@@ -18,13 +18,15 @@ public class CategoryController {
     @PostMapping
     public void save(@Valid @RequestBody CategoryRequest request){
         categoryService.save(request);
-
     }
 
     @GetMapping
-    public List<CategoryResponse> findAll(){
-        return categoryService.findAll();
+    public List<CategoryResponse> findAll(@RequestParam(defaultValue = "id") String fieldName) {
+        return categoryService.findAll(fieldName);
     }
+   // public List<CategoryResponse> findAll(){
+   //     return categoryService.findAll();
+   // }
 
     @PutMapping
     public  void update(@Valid @RequestBody CategoryRequest request, Long id){

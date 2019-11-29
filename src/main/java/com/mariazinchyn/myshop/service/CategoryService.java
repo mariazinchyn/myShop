@@ -7,6 +7,7 @@ import com.mariazinchyn.myshop.exception.HasDependenciesExceptions;
 import com.mariazinchyn.myshop.exception.NoMatchesException;
 import com.mariazinchyn.myshop.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +34,10 @@ public class CategoryService {
 
 
     }
-    public List<CategoryResponse> findAll(){
-        return categoryRepository.findAll().stream()
-                .map(CategoryResponse::new)
+
+    public List<CategoryResponse> findAll(String fieldName) {
+        return categoryRepository.findAll(Sort.by(fieldName)).stream()
+                        .map(CategoryResponse::new)
                 .collect(Collectors.toList())
                 ;
     }
