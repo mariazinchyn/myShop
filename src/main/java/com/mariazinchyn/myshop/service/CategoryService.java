@@ -41,6 +41,13 @@ public class CategoryService {
                 .collect(Collectors.toList())
                 ;
     }
+
+    public CategoryResponse findOneResponse(Long id) {
+        return new CategoryResponse(findOne(id));
+    }
+
+
+
     public Category findOne(Long id){
         return categoryRepository.findById(id).orElseThrow(() -> new NoMatchesException("Category with id " + id + "not exist"));
 

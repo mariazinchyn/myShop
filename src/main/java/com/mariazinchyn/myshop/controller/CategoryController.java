@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -27,6 +28,11 @@ public class CategoryController {
    // public List<CategoryResponse> findAll(){
    //     return categoryService.findAll();
    // }
+
+    @GetMapping("/one/{id}")
+    public CategoryResponse findOne(@PathVariable Long id) {
+        return categoryService.findOneResponse(id);
+    }
 
     @PutMapping
     public  void update(@Valid @RequestBody CategoryRequest request, Long id){

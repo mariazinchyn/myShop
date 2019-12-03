@@ -12,10 +12,12 @@ package com.mariazinchyn.myshop.service;
         import org.springframework.data.domain.PageRequest;
         import org.springframework.data.domain.Sort;
         import org.springframework.stereotype.Service;
+        import org.springframework.web.bind.annotation.CrossOrigin;
 
         import java.io.IOException;
         import java.util.List;
         import java.util.stream.Collectors;
+
 
 @Service
 public class ProductService{
