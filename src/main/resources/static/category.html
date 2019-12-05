@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>category</title>
+    <style>
+        body{
+            font-size: 20px;
+            font-family: "Verdana";
+            background-color: #fee3c6;
+        }
+    </style>
 </head>
 <body>
+
 <div class="create-container" style="display: none">
     <input type="text" id="name-input">
     <button id="send-btn">SEND</button>
@@ -74,13 +82,13 @@
     };
     const appendCategory = (category) => {
         $table.append(`
-                     <tr>
-                                      <td>${category.id}</td>
-                                      <td>${category.name}</td>
-                                                       <td>
-                                                            <button data-id="${category.id}" class="delete-btn">DELETE</button>
-                                                            <button data-id="${category.id}" class="update-btn">UPDATE</button>
-                                                        </td>
+                           <tr>
+                  <td>${category.id}</td>
+                  <td>${category.name}</td>
+                  <td>
+                       <button data-id="${category.id}" class="delete-btn">DELETE</button>
+                       <button data-id="${category.id}" class="update-btn">UPDATE</button>
+                  </td>
                         </tr>
                                  `)
                                       };
