@@ -9,14 +9,21 @@
             font-family: "Verdana";
             background-color: #fee3c6;
         }
+        h1 {
+            background-color: black;
+            color: azure;
+        }
     </style>
 </head>
 <body>
+
+<h1>MyShop</h1>
 
 <div class="create-container" style="display: none">
     <input type="text" id="name-input">
     <button id="send-btn">SEND</button>
     <button id="clear-btn">CLEAR</button>
+    <div class = "hint"></div>
     </div>
 <table>
     <thead>
@@ -160,11 +167,35 @@
 
     $('#clear-btn').click(clearForm);
 
+
     getCategories();
+</script>
+<script>
+    $('#name-input').keypress(e => {
+        $.ajax({
+            url: `http://localhost:8011/category/byName?value=${e.target.value}`,
+            type: 'get',
+            success: res => {
+                const $hint = $('.hint');
+                $hint.html('');
+                for (const category of res) {
+                    $hint.append(`<p>${category.id}. ${category.name}</p>`)
+                }
+        },
+        error: err => {
+                console.log(err);
+                alert('Something went wrong.')
+
+             }
+
+        })
+    });
+
+    $('#name-input').focusout(_ => {
+        $('.hint').html('');
+    })
 </script>
 </body>
 </html>
 
-</script>
-</body>
-</html>
+

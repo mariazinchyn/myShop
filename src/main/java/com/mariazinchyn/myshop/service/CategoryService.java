@@ -42,6 +42,12 @@ public class CategoryService {
                 ;
     }
 
+    public List<CategoryResponse> findAllByName(String value){
+        return categoryRepository.findAllByNameLike('%' + value + '%', Sort.by("name")).stream()
+                .map(CategoryResponse::new)
+                .collect(Collectors.toList());
+    }
+
     public CategoryResponse findOneResponse(Long id) {
         return new CategoryResponse(findOne(id));
     }
@@ -68,4 +74,6 @@ public class CategoryService {
         category.setName(request.getName());
         return category;
     }
+
+
 }

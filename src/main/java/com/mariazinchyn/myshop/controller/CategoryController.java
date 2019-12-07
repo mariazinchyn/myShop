@@ -34,6 +34,12 @@ public class CategoryController {
         return categoryService.findOneResponse(id);
     }
 
+
+    @GetMapping("/byName")
+    public List<CategoryResponse> findAllByName(@RequestParam String value) {
+        return categoryService.findAllByName(value);
+    }
+
     @PutMapping
     public  void update(@Valid @RequestBody CategoryRequest request, Long id){
         categoryService.update(request, id);
