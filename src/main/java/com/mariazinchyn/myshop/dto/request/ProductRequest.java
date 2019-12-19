@@ -18,10 +18,13 @@ public class ProductRequest {
     @Positive
     @NotNull
     private Long price;
-    private String photo;
+   // private String photo;
     private String size;
 
     @NotNull
     private Long subcategoryId;
+
+    private String photo;
+
 
 }

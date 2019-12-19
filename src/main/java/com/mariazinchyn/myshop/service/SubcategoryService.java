@@ -28,7 +28,7 @@ public class SubcategoryService {
         subcategoryRepository.save(subcategory);
 
     }
-    public List<SubcategoryResponse> findAllByCategoryId(Long categoryId){
+   public List<SubcategoryResponse> findAllByCategoryId(Long categoryId){
         return subcategoryRepository.findAllByCategoryId(categoryId).stream().map(SubcategoryResponse::new).collect(Collectors.toList());
     }
     public Subcategory findOne(Long id){

@@ -43,5 +43,12 @@ public class ProductController {
            }
 
 
+    @GetMapping("/one/{id}")
+   public ProductResponse findOne(@PathVariable Long id) {
+        return productService.findOneResponse(id);
     }
+    }
+
+
+
 

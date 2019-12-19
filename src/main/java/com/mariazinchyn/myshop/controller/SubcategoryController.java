@@ -23,4 +23,11 @@ public class SubcategoryController {
     public void save(@Valid @RequestBody SubcategoryRequest request) {
         subcategoryService.save(request);
     }
+
+
+    @GetMapping("/byCategoryId/{categoryId}")
+    public List<SubcategoryResponse> findAllByCategoryId(@PathVariable Long categoryId) {
+      return subcategoryService.findAllByCategoryId(categoryId);
+    }
+
 }

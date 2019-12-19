@@ -13,8 +13,9 @@ public class ProductResponse {
     private String size;
     private Long price;
     private String photo;
-    private Long subcategoryId;
-   // private SubcategoryResponse subcategoryResponse;
+    //private Long subcategoryId;
+   private SubcategoryResponse subcategoryResponse;
+
 
     public ProductResponse(Product product){
         id = product.getId();
@@ -22,8 +23,9 @@ public class ProductResponse {
         size = product.getSize();
         price = product.getPrice();
         photo = product.getPhoto();
-        subcategoryId = product.getSubcategory().getId();
-       // subcategoryResponse = new SubcategoryResponse(product.getSubcategory());
+        //subcategoryId = product.getSubcategory().getId();
+       subcategoryResponse = new SubcategoryResponse(product.getSubcategory());
+
 
 
     }

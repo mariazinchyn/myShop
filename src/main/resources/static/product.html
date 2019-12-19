@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+</head>
+<body>
+<div class="create-form">
+    <div>
+        <input id="create-form_name-input" placeholder="Name">
+    </div>
+    <div>
+        <input id="create-form_price-input" type="number" placeholder="Price">
+    </div>
+    <div>
+        <input id="create-form_size-input" placeholder="Size">
+            </div>
+    <div>
+        <input id="create-form_img-input" type="file" multiple>
+    </div>
+    <div>
+        <label for="create-form_category-select">Category</label>
+        <select id="create-form_category-select"></select>
+    </div>
+    <div>
+        <label for="create-form_subcategory-select">Subcategory</label>
+        <select id="create-form_subcategory-select" disabled></select>
+    </div>
+    <div>
+        <button id="create-form_send-btn">Send</button></div>
+
+<!--        <thead>
+            <tr>
+        <td>ID</td>
+        <td>NAME</td>
+        <td>PRICE</td>
+        <td>SIZE</td>
+        <td>IMG</td>
+        <td>ACTIONS</td>
+            </tr>
+        </thead>
+    <tbody class="products"></tbody>
+    </table>
+    -->
+
+
+</div>
+<div class="products"></div>
+
+<script src="js/utils.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+    const HOST = 'http://localhost:8011';
+
+    const $form = $('.create-form');
+    const $nameInput = $('#create-form_name-input');
+    const $sizeInput = $('#create-form_size-input');
+    const $priceInput = $('#create-form_price-input');
+    const $imgInput = $('#create-form_img-input');
+    const $categorySelect = $('#create-form_category-select');
+    const $subcategorySelect = $('#create-form_subcategory-select');
+    const $sendBtn = $('#create-form_send-btn');
+    const $products = $('.products');
+
+
+    // const appendProduct = product => {
+     //   $products.append(`
+      //      <tr>
+         //       <td>${product.id}</td>
+           //     <td>${product.name}</td>
+           //     <td>${product.price}</td>
+            //    <td>${product.rating}</td>
+            //    <td>${product.description}</td>
+            //    <td><img width="100" src="${HOST}/images/${product.photo}"></td>
+             //   <td><button class="update-btn" data-id="${product.id}">UPDATE</button></td>
+           // </tr>
+       // `);
+  //  };
+
+
+    const getProducts = () => {
+        $.ajax({
+            url: `${HOST}/product?page=0&size=100`,
+            type: 'GET',
+            success: res => {
+                $products.html('');
+                for (const product of res.data) {
+                    product.append(`<p>${JSON.stringify(product)}</p>`)
+
+                }
+
+            },
+            error: appHandleError
+        })
+    };
+
+    const getCategories = () => {
+        $.ajax({
+            url: `${HOST}/category`,
+            type: 'GET',
+            success: res => {
+                //$categorySelect.html('<option disabled selected>Select category</option>');
+                $categorySelect.html('');
+                for (const category of res) {
+                    $categorySelect.append(`<option value="${category.id}">${category.name}</option>`)
+                }
+            },
+            error: appHandleError
+        })
+    };
+
+    $categorySelect.change(e => {
+        $.ajax({
+            url:`${HOST}/subcategory/byCategoryId/${$categorySelect.val()}`,
+            type:'GET',
+            success: res => {
+                $subcategorySelect.html('');
+                for (const subcategory of res) {
+                    $subcategorySelect.append(`<option value="${subcategory.id}">${subcategory.name}</option>`)
+                }
+
+            },
+            error: appHandleError
+        })
+    });
+    //$categorySelect.change(onCategorySelect);
+    getCategories();
+    getProducts();
+</script>
+</body>
+</html>

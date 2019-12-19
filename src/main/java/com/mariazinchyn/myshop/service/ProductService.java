@@ -67,6 +67,15 @@ public class ProductService{
                         product.setSubcategory(subcategoryService.findOne(request.getSubcategoryId()));
                         return product;
                 }
+
+        public ProductResponse findOneResponse(Long id) {
+               return new ProductResponse(findOne(id));
+
+       }
+
+
+
+
         }
 
 
