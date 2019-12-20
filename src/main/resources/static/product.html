@@ -27,9 +27,13 @@
         <select id="create-form_subcategory-select" disabled></select>
     </div>
     <div>
-        <button id="create-form_send-btn">Send</button></div>
+        <button id="create-form_send-btn">Send</button>
+    </div>
+</div>
 
-<!--        <thead>
+
+<table>
+       <thead>
             <tr>
         <td>ID</td>
         <td>NAME</td>
@@ -41,10 +45,10 @@
         </thead>
     <tbody class="products"></tbody>
     </table>
-    -->
 
 
-</div>
+
+
 <div class="products"></div>
 
 <script src="js/utils.js"></script>
@@ -63,19 +67,19 @@
     const $products = $('.products');
 
 
-    // const appendProduct = product => {
-     //   $products.append(`
-      //      <tr>
-         //       <td>${product.id}</td>
-           //     <td>${product.name}</td>
-           //     <td>${product.price}</td>
-            //    <td>${product.rating}</td>
-            //    <td>${product.description}</td>
-            //    <td><img width="100" src="${HOST}/images/${product.photo}"></td>
-             //   <td><button class="update-btn" data-id="${product.id}">UPDATE</button></td>
-           // </tr>
-       // `);
-  //  };
+    const appendProduct = product => {
+        $products.append(`
+          <tr>
+              <td>${product.id}</td>
+                <td>${product.name}</td>
+               <td>${product.price}</td>
+               <td>${product.rating}</td>
+                <td>${product.description}</td>
+                <td><img width="100" src="${HOST}/images/${product.photo}"></td>
+                <td><button class="update-btn" data-id="${product.id}">UPDATE</button></td>
+            </tr>
+        `);
+    };
 
 
     const getProducts = () => {
@@ -85,7 +89,7 @@
             success: res => {
                 $products.html('');
                 for (const product of res.data) {
-                    product.append(`<p>${JSON.stringify(product)}</p>`)
+                    $products.append(`<p>${JSON.stringify(product)}</p>`)
 
                 }
 
@@ -109,7 +113,7 @@
         })
     };
 
-    $categorySelect.change(e => {
+    const onCategorySelect = subcategoryId => {
         $.ajax({
             url:`${HOST}/subcategory/byCategoryId/${$categorySelect.val()}`,
             type:'GET',
@@ -118,12 +122,37 @@
                 for (const subcategory of res) {
                     $subcategorySelect.append(`<option value="${subcategory.id}">${subcategory.name}</option>`)
                 }
+                $subcategorySelect[0].removeAttribute('disabled');
+                $subcategorySelect.val(subcategoryId || '');
 
             },
             error: appHandleError
         })
-    });
-    //$categorySelect.change(onCategorySelect);
+    };
+
+    const onSendClick = e => {
+        const request = {
+            url: `${HOST}/product`,
+            data: JSON.stringify({
+                name: $nameInput.val(),
+                price: $priceInput.val(),
+                size: $sizeInput.val(),
+                subcategorySelect: $subcategorySelect.val()
+            }),
+            contentType:'application/json',
+            success: getProducts,
+            error: appHandleError
+        }
+        $.ajax({
+            ...request,
+            url: `${HOST}/product`,
+            type: 'POST'
+        })
+    };
+
+
+    $categorySelect.change(onCategorySelect);
+    $sendBtn.click(onSendClick);
     getCategories();
     getProducts();
 </script>
