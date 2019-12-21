@@ -49,7 +49,7 @@
 
 
 
-<div class="products"></div>
+<!--<div class="products"></div>-->
 
 <script src="js/utils.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -71,12 +71,11 @@
         $products.append(`
           <tr>
               <td>${product.id}</td>
-                <td>${product.name}</td>
+               <td>${product.name}</td>
                <td>${product.price}</td>
-               <td>${product.rating}</td>
-                <td>${product.description}</td>
-                <td><img width="100" src="${HOST}/images/${product.photo}"></td>
-                <td><button class="update-btn" data-id="${product.id}">UPDATE</button></td>
+               <td>${product.size}</td>
+               <td><img width="100" src="${HOST}/images/${product.photo}"></td>
+               <td><button class="update-btn" data-id="${product.id}">UPDATE</button></td>
             </tr>
         `);
     };
@@ -89,10 +88,9 @@
             success: res => {
                 $products.html('');
                 for (const product of res.data) {
-                    $products.append(`<p>${JSON.stringify(product)}</p>`)
-
+                    appendProduct(product);
                 }
-
+                $('.update-btn').click(onUpdateClick);
             },
             error: appHandleError
         })
@@ -131,25 +129,73 @@
     };
 
     const onSendClick = e => {
+        const id = $sendBtn.attr('data-id');
+        const data = {
+            name: $nameInput.val(),
+            price: $priceInput.val(),
+            size: $sizeInput.val(),
+            subcategoryId: $subcategorySelect.val()
+
+
+        };
         const request = {
-            url: `${HOST}/product`,
-            data: JSON.stringify({
-                name: $nameInput.val(),
-                price: $priceInput.val(),
-                size: $sizeInput.val(),
-                subcategorySelect: $subcategorySelect.val()
-            }),
-            contentType:'application/json',
-            success: getProducts,
+            contentType: 'application/json',
+            success: () => {
+                clearFields();
+                getProducts();
+            },
             error: appHandleError
-        }
-        $.ajax({
-            ...request,
-            url: `${HOST}/product`,
-            type: 'POST'
-        })
+
+
+
+        };
+        appGetTest16($imgInput[0].files[0])
+            .then(img => data.photo = img)
+            .catch()
+            .finally(_ => {
+                if (id) {
+                    $.ajax({
+                        ...request,
+                        url: `${HOST}/product?id=${id}`,
+                        type: 'PUT',
+                        data: JSON.stringify(data)
+                    })
+                } else {
+                    $.ajax({
+                        ...request,
+                        url: `${HOST}/product`,
+                        type: 'POST',
+                        data: JSON.stringify(data)
+                    })
+                }
+            })
     };
 
+    const onUpdateClick = e => {
+        const id = e.target.getAttribute('data-id');
+        $.ajax({
+            url: `${HOST}/product/one/${id}`,
+            type: 'GET',
+            success: res => {
+                $nameInput.val(res.name);
+                $priceInput.val(res.price);
+                $sizeInput.valueOf(res.size);
+                $categorySelect.val(res.subcategoryResponse.categoryId);
+                onCategorySelect(res.subcategoryResponse.id);
+                $sendBtn.attr('data-id', id);
+            },
+            error: appHandleError
+        })
+    };
+    const clearFields = () => {
+        $nameInput.val('');
+        $priceInput.val('');
+        $sizeInput.val('');
+        $subcategorySelect.val('');
+        $subcategorySelect.attr('disabled', 'true');
+        $categorySelect.val('');
+        $sendBtn.attr('data-id', '');
+    };
 
     $categorySelect.change(onCategorySelect);
     $sendBtn.click(onSendClick);
