@@ -1,5 +1,6 @@
 package com.mariazinchyn.myshop.service;
 
+        import com.mariazinchyn.myshop.dto.request.ProductCriteriaRequest;
         import com.mariazinchyn.myshop.dto.request.ProductRequest;
         import com.mariazinchyn.myshop.dto.response.PageResponse;
         import com.mariazinchyn.myshop.dto.response.ProductResponse;
@@ -7,6 +8,7 @@ package com.mariazinchyn.myshop.service;
         import com.mariazinchyn.myshop.exception.NoMatchesException;
         import com.mariazinchyn.myshop.repository.ProductRepository;
         import com.mariazinchyn.myshop.repository.SubcategoryRepository;
+        import com.mariazinchyn.myshop.specification.ProductSpecification;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.data.domain.Page;
         import org.springframework.data.domain.PageRequest;
@@ -45,6 +47,9 @@ public class ProductService{
                         collect);
         }
 
+
+
+
         public void update(ProductRequest request, Long id) throws IOException{
             productRepository.save(productRequestToProduct(findOne(id), request));
         }
@@ -63,10 +68,18 @@ public class ProductService{
                         product.setName(request.getName());
                         product.setSize(request.getSize());
                         product.setPhoto(request.getPhoto());
-                        //product.getPhoto(request.getPhoto());
                         product.setSubcategory(subcategoryService.findOne(request.getSubcategoryId()));
                         return product;
                 }
+
+    public PageResponse<ProductResponse> findPageByCriteria(ProductCriteriaRequest criteriaRequest, Integer page, Integer size, String fieldName, Sort.Direction direction) {
+        Page<Product> data = productRepository.findAll(new ProductSpecification(criteriaRequest), PageRequest.of(page, size, direction, fieldName));
+        List<ProductResponse> collect = data.get().map(ProductResponse::new).collect(Collectors.toList());
+        return new PageResponse<>(data.getTotalElements(),
+                data.getTotalPages(),
+                collect);
+
+    }
 
         public ProductResponse findOneResponse(Long id) {
                return new ProductResponse(findOne(id));

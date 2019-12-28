@@ -1,5 +1,6 @@
 package com.mariazinchyn.myshop.controller;
 
+import com.mariazinchyn.myshop.dto.request.ProductCriteriaRequest;
 import com.mariazinchyn.myshop.dto.request.ProductRequest;
 
 import com.mariazinchyn.myshop.dto.response.PageResponse;
@@ -36,6 +37,18 @@ public class ProductController {
          return productService.findPage(page, size, fieldName, direction);
 
      }
+
+    @GetMapping("/filter")
+    public PageResponse<ProductResponse> findPageByCriteria(
+            ProductCriteriaRequest productCriteriaRequest,
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestParam(defaultValue = "name") String fieldName,
+            @RequestParam(defaultValue = "ASC") Sort.Direction direction
+    ) {
+        return productService.findPage(page, size, fieldName, direction);
+
+    }
 
       @PutMapping
      public void update(@Valid @RequestBody ProductRequest request, Long id)throws IOException {
