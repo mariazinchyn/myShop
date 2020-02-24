@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+
+
+
+<h2>
+    JavaScript Size Calculator</h2>
+Please input a bust size:<br />
+
+<input id="bust" />
+<button onclick="myFunction()" type="button">Calculate</button>
+<div id="demo">
+</div>
+<script>
+    function myFunction() {
+        var x, text;
+
+        // Get the value of the input field with id="bust"
+        x = document.getElementById("bust").value;
+
+
+        // If x is Not a Number or less than one or greater than 200
+        if (isNaN(x) || x < 1 || x > 200) {
+            text = "Input not valid";
+
+        } else if(x <80){
+            text = "Your size is XS."
+        }else if(x >= 80 && x <= 84) {
+            text = "Your size is S."
+        } else if(x > 84  && x <= 92){
+            text = "Your size is M."
+        } else if (x > 92 && x <= 100) {
+            text = "Your size is L."
+        } else
+            text = "Your size is XL."
+
+
+        document.getElementById("demo").innerHTML = text;
+    }
+
+</script>
+</body>
+</html>
+
+</body>
+</html>
+
